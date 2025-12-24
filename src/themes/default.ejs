@@ -802,7 +802,9 @@
             <% function renderGroup(group) { %>
               <h2 class="group-header" onclick="tabClickHandler(event)">Group - <%= group.name %></h2>
               <div>
-                <% if(data.metrics.length > 0) { %>
+                <% const metrics = Object.entries(data.metrics || {}); %>
+
+                <% if (metrics.length > 0) { %>
                   <table>
                     <thead>
                       <tr>
@@ -811,51 +813,18 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <% for(metric of data.metrics) { %>
-                        <% if(metric.description) { %>
+                      <% for (const [name, metric] of metrics) { %>
+                        <% if (metric.description) { %>
                           <tr class="checkDetails">
-                            <td width="50%"><%= metric.name %></td>
+                            <td width="50%"><%= name %></td>
                             <td width="50%"><%= metric.description %></td>
                           </tr>
+                        <% } %>
                       <% } %>
                     </tbody>
                   </table>
                 <% } %>
-                <% if(group.groups.length > 0) { %>
-                  <div class="sub-groups">
-                    <% for(subGroup of group.groups) { %>
-                      <%- renderGroup(subGroup) %>
-                    <% } %>
-                  </div>
-                <% } %>
-              </div>
-            <% } %>
-
-            <% for(group of data.root_group.groups) { %>
-              <%- renderGroup(group) %>
-            <% } %>
-
-            <h2>Other Checks</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>Check Name</th>
-                  <th>Passes</th>
-                  <th>Failures</th>
-                  <th>% Pass</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% for(check of data.root_group.checks) { %>
-                  <tr class="checkDetails">
-                    <td width="50%"><%= check.name %></td>
-                    <td class="<% if(check.fails === 0 && check.passes > 0) { %>good<% } %>"><%= check.passes %></td>
-                    <td class="<% if(check.fails > 0) { %>failed<% } %>"><%= check.fails %></td>
-                    <td class="<% if(check.fails > 0) { %>failed<% } %>"><%= parseFloat((check.passes / (check.fails + check.passes)) * 100).toFixed(2) %></td>
-                  </tr>
-                <% } %>
-              </tbody>
-            </table>     
+  
           </div> 
           <!-- ---- end tab ---- -->
         </div>
