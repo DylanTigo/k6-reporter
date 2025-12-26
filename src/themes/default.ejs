@@ -530,9 +530,10 @@
                 <tbody>
                   <% for (metric of trendMetrics) { 
                     let metricData = data.metrics[metric];
+                    let description = metricData.description ? ' - ' + metricData.description : '';
                   %>
                   <tr>
-                    <td><b><%= metric %></b></td>
+                    <td><b><%= metric %></b><%= description %></td>
                     <% for (statName of data.options.summaryTrendStats) {
                           let val = metricData.values[statName];
                           val = val !== undefined ? val.toFixed(2) : val = '-'; %>
@@ -796,7 +797,7 @@
           </div> 
           <!-- ---- end tab ---- -->
 
-          <input type="radio" name="tabs" id="tabfour">
+          <!-- <input type="radio" name="tabs" id="tabfour">
           <label for="tabfour"><i class="fas fa-square-check"></i> Metrics Descriptions</label>
           <div class="tab">
             <% function renderGroup(group) { %>
@@ -824,8 +825,8 @@
                     </tbody>
                   </table>
                 <% } %>
-  
-          </div> 
+
+          </div> -->
           <!-- ---- end tab ---- -->
         </div>
       </div>
