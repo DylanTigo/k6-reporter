@@ -5,35 +5,118 @@ import path from 'path'
 const theme = 'default'
 
 const testDataFile = `tests/data/${process.argv[2] || 'simple.json'}`
-console.log(`📂 Reading test data from: ${testDataFile}`)
 
 // Read the test data from the file
 const testData = JSON.parse(fs.readFileSync(path.resolve(testDataFile)), 'utf8')
 const testData2 = {
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "isStdOutTTY": true,
+    "isStdErrTTY": true,
+    "testRunDurationMs": 6526.626798
+  },
   "metrics": {
+    "http_req_failed": {
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 3
+      },
+      "description": "Taux d'échec des requêtes HTTP",
+      "type": "rate",
+      "contains": "default"
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "description": "Durée totale de la requête HTTP (envoi + attente + réception)",
+      "values": {
+        "min": 761.138509,
+        "med": 940.520141,
+        "max": 996.557939,
+        "p(90)": 985.3503794000001,
+        "p(95)": 990.9541592,
+        "avg": 899.4055296666667
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 0.08578780000000001,
+        "p(95)": 0.09298189999999999,
+        "avg": 0.05198466666666667,
+        "min": 0.027543,
+        "med": 0.028235,
+        "max": 0.100176
+      },
+      "description": "Temps d'envoi des données au serveur"
+    },
+    "request_count": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 3,
+        "rate": 0.4596555146862865
+      },
+      "description": "Nombre total de requêtes"
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 987.8977305,
+        "avg": 898.1594896666666,
+        "min": 760.890188,
+        "med": 940.414653,
+        "max": 993.173628,
+        "p(90)": 982.621833
+      },
+      "description": "Temps d'attente de la première réponse du serveur (TTFB)"
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 83.89034933333333,
+        "min": 0,
+        "med": 0,
+        "max": 251.671048,
+        "p(90)": 201.33683840000003,
+        "p(95)": 226.50394319999998
+      },
+      "description": "Temps pour le handshake TLS/SSL"
+    },
+    "iterations": {
+      "description": "Nombre total d'itérations de la fonction default",
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.15321850489542885
+      }
+    },
     "http_req_duration{expected_response:true}": {
       "type": "trend",
       "contains": "time",
-      "description": "",
       "values": {
-        "avg": 807.21857,
-        "min": 471.518397,
-        "med": 906.982799,
-        "max": 1043.154514,
-        "p(90)": 1015.9201710000001,
-        "p(95)": 1029.5373425
-      }
-    },
-    "http_req_blocked": {
-      "type": "trend",
-      "contains": "time",
-      "values": {
-        "p(90)": 530.3920238000001,
-        "p(95)": 596.6897444,
-        "avg": 221.00237066666668,
-        "min": 0.009388,
-        "med": 0.010259,
-        "max": 662.987465
+        "max": 996.557939,
+        "p(90)": 985.3503794000001,
+        "p(95)": 990.9541592,
+        "avg": 899.4055296666667,
+        "min": 761.138509,
+        "med": 940.520141
       },
       "description": ""
     },
@@ -42,106 +125,133 @@ const testData2 = {
       "contains": "default",
       "values": {
         "count": 11168,
-        "rate": 1746.9309089376125
+        "rate": 1711.1442626721494
       },
       "description": "Octets reçus (download)"
     },
-    "data_received": {
-      "description": "",
-      "type": "counter",
-      "contains": "data",
-      "values": {
-        "count": 16588,
-        "rate": 2594.743008368295
-      }
-    },
-    "iterations": {
-      "description": "",
-      "values": {
-        "rate": 0.1564228965739266,
-        "count": 1
-      },
-      "type": "counter",
-      "contains": "default"
-    },
-    "iteration_duration": {
-      "values": {
-        "med": 6392.752192,
-        "max": 6392.752192,
-        "p(90)": 6392.752192,
-        "p(95)": 6392.752192,
-        "avg": 6392.752192,
-        "min": 6392.752192
-      },
-      "type": "trend",
-      "contains": "time",
-      "description": ""
-    },
-    "error_rate": {
-      "type": "rate",
-      "contains": "default",
-      "values": {
-        "passes": 0,
-        "fails": 3,
-        "rate": 0
-      },
-      "description": "Taux d'erreurs des requêtes HTTP"
-    },
-    "vus": {
+    "vus_max": {
       "type": "gauge",
-      "description": "",
       "contains": "default",
+      "description": "Nombre maximum d'utilisateurs virtuels",
       "values": {
         "max": 1,
         "value": 1,
         "min": 1
       }
     },
-    "request_count": {
+    "http_req_blocked": {
+      "values": {
+        "max": 522.583772,
+        "p(90)": 418.0686625999999,
+        "p(95)": 470.3262172999999,
+        "avg": 174.19996333333333,
+        "min": 0.007893,
+        "med": 0.008225
+      },
+      "description": "Temps bloqué avant l'initiation de la requête",
+      "type": "trend",
+      "contains": "time"
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 2407,
+        "rate": 368.7969412832972
+      },
+      "description": "Volume de données envoyées"
+    },
+    "iteration_duration": {
+      "contains": "time",
+      "values": {
+        "avg": 6526.536004,
+        "min": 6526.536004,
+        "med": 6526.536004,
+        "max": 6526.536004,
+        "p(90)": 6526.536004,
+        "p(95)": 6526.536004
+      },
+      "type": "trend",
+      "description": "Temps pour compléter une itération complète"
+    },
+    "ttfb": {
+      "contains": "time",
+      "values": {
+        "min": 760.890188,
+        "med": 940.414653,
+        "max": 993.173628,
+        "p(90)": 982.621833,
+        "p(95)": 987.8977305,
+        "avg": 898.1594896666666
+      },
+      "description": "Temps jusqu'au premier octet",
+      "type": "trend"
+    },
+    "checks": {
+      "type": "rate",
       "contains": "default",
       "values": {
-        "count": 3,
-        "rate": 0.4692686897217799
+        "rate": 1,
+        "passes": 3,
+        "fails": 0
       },
-      "type": "counter",
-      "description": "Nombre total de requêtes"
+      "description": "Vérifications effectuées pendant le test"
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0.077945,
+        "med": 0.220086,
+        "max": 3.284135,
+        "p(90)": 2.6713252,
+        "p(95)": 2.9777300999999996,
+        "avg": 1.1940553333333335
+      },
+      "description": "Temps de réception de la réponse"
     },
     "request_duration": {
       "type": "trend",
       "contains": "time",
       "values": {
-        "avg": 807.21857,
-        "min": 471.518397,
-        "med": 906.982799,
-        "max": 1043.154514,
-        "p(90)": 1015.9201710000001,
-        "p(95)": 1029.5373425
+        "p(90)": 985.3503794000001,
+        "p(95)": 990.9541592,
+        "avg": 899.4055296666667,
+        "min": 761.138509,
+        "med": 940.520141,
+        "max": 996.557939
       },
       "description": "Durée totale de la requête"
     },
-    "http_req_receiving": {
-      "description": "",
-      "type": "trend",
-      "contains": "time",
+    "error_rate": {
+      "type": "rate",
+      "contains": "default",
       "values": {
-        "avg": 3.380626,
-        "min": 0.140938,
-        "med": 3.876472,
-        "max": 6.124468,
-        "p(90)": 5.6748688000000005,
-        "p(95)": 5.8996683999999995
-      }
+        "rate": 0,
+        "passes": 0,
+        "fails": 3
+      },
+      "description": "Taux d'erreurs des requêtes HTTP"
     },
-    "egress_bytes": {
+    "http_reqs": {
       "type": "counter",
       "contains": "default",
       "values": {
-        "rate": 15.329443864244809,
-        "count": 98
+        "count": 3,
+        "rate": 0.4596555146862865
       },
-      "description": "Octets envoyés (upload)"
+      "description": "Nombre total de requêtes HTTP générées"
     },
-    "vus_max": {
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 16587,
+        "rate": 2541.4353407004783
+      },
+      "description": "Volume de données reçues"
+    },
+    "vus": {
       "type": "gauge",
       "contains": "default",
       "values": {
@@ -149,130 +259,65 @@ const testData2 = {
         "min": 1,
         "max": 1
       },
-      "description": ""
-    },
-    "http_req_duration": {
-      "contains": "time",
-      "values": {
-        "max": 1043.154514,
-        "p(90)": 1015.9201710000001,
-        "p(95)": 1029.5373425,
-        "avg": 807.21857,
-        "min": 471.518397,
-        "med": 906.982799
-      },
-      "type": "trend",
-      "description": "Temps total des requêtes HTTP (ms)"
+      "description": "Nombre d'utilisateurs virtuels actifs"
     },
     "http_req_connecting": {
-      "type": "trend",
-      "contains": "time",
       "values": {
-        "avg": 81.24058366666667,
+        "avg": 76.60826366666667,
         "min": 0,
         "med": 0,
-        "max": 243.721751,
-        "p(90)": 194.97740080000003,
-        "p(95)": 219.3495759
+        "max": 229.824791,
+        "p(90)": 183.85983280000002,
+        "p(95)": 206.84231189999997
       },
-      "description": ""
-    },
-    "http_req_sending": {
-      "description": "",
-      "values": {
-        "med": 0.048593,
-        "max": 0.092727,
-        "p(90)": 0.08390020000000001,
-        "p(95)": 0.08831359999999999,
-        "avg": 0.059417,
-        "min": 0.036931
-      },
+      "description": "Temps pour établir la connexion TCP",
       "type": "trend",
       "contains": "time"
     },
-    "http_reqs": {
+    "egress_bytes": {
+      "values": {
+        "count": 98,
+        "rate": 15.015413479752027
+      },
+      "description": "Octets envoyés (upload)",
       "type": "counter",
-      "contains": "default",
-      "values": {
-        "count": 3,
-        "rate": 0.4692686897217799
-      },
-      "description": ""
-    },
-    "http_req_waiting": {
-      "contains": "time",
-      "values": {
-        "avg": 803.7785269999999,
-        "min": 467.593332,
-        "med": 906.80493,
-        "max": 1036.937319,
-        "p(90)": 1010.9108411999999,
-        "p(95)": 1023.9240800999999
-      },
-      "description": "Temps d'attente du serveur (TTFB)",
-      "type": "trend"
-    },
-    "ttfb": {
-      "values": {
-        "avg": 803.7785269999999,
-        "min": 467.593332,
-        "med": 906.80493,
-        "max": 1036.937319,
-        "p(90)": 1010.9108411999999,
-        "p(95)": 1023.9240800999999
-      },
-      "description": "Temps jusqu'au premier octet",
-      "type": "trend",
-      "contains": "time"
-    },
-    "http_req_tls_handshaking": {
-      "type": "trend",
-      "contains": "time",
-      "values": {
-        "avg": 83.59837333333333,
-        "min": 0,
-        "med": 0,
-        "max": 250.79512,
-        "p(90)": 200.636096,
-        "p(95)": 225.71560799999997
-      },
-      "description": ""
-    },
-    "data_sent": {
-      "description": "",
-      "type": "counter",
-      "contains": "data",
-      "values": {
-        "count": 2407,
-        "rate": 376.5099120534414
-      }
-    },
-    "checks": {
-      "values": {
-        "passes": 3,
-        "fails": 0,
-        "rate": 1
-      },
-      "type": "rate",
-      "contains": "default",
-      "description": "Résultat des checks fonctionnels"
-    },
-    "http_req_failed": {
-      "description": "Pourcentage de requêtes en échec",
-      "contains": "default",
-      "values": {
-        "rate": 0,
-        "passes": 0,
-        "fails": 3
-      },
-      "type": "rate"
+      "contains": "default"
     }
+  },
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [],
+    "checks": [
+        {
+          "fails": 0,
+          "name": "POST OK",
+          "path": "::POST OK",
+          "id": "046baf4fb423e68554a4d5b539df6d79",
+          "passes": 1
+        },
+        {
+          "path": "::GET OK",
+          "id": "93c1b0a066a35c0229d749305090e14b",
+          "passes": 1,
+          "fails": 0,
+          "name": "GET OK"
+        },
+        {
+          "name": "DELETE OK",
+          "path": "::DELETE OK",
+          "id": "124694847017c1d9d65d563fb9ce7fed",
+          "passes": 1,
+          "fails": 0
+        }
+      ]
   }
 }
 
 // Generate the HTML report
 try {
-  const report = htmlReport(testData, { debug: false, theme })
+  const report = htmlReport(testData2, { debug: false, theme })
 
   // You can either display the report in the console
   console.log('✅ HTML Report generated successfully')
