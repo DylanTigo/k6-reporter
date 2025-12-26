@@ -530,7 +530,7 @@
                 <tbody>
                   <% for (metric of trendMetrics) { 
                     let metricData = data.metrics[metric];
-                    let description = metricData.description ? ' - ' + metricData.description : '';
+                    let description = metricData.description ? ' (' + metricData.description + ')' : '';
                   %>
                   <tr>
                     <td><b><%= metric %></b><%= description %></td>
@@ -559,9 +559,10 @@
                 <tbody>
                   <% for (metric of rateMetrics) { 
                     let metricData = data.metrics[metric];
+                    let description = metricData.description ? ' (' + metricData.description + ')' : '';
                   %>
                   <tr>
-                    <td><b><%= metric %></b></td>
+                    <td><b><%= metric %></b><%= description %></td>
                     <% for (statName of ['rate', 'passes', 'fails']) {
                       let val = metricData.values[statName];
                       val = val !== undefined ? val.toFixed(2) : val = '-';
@@ -589,9 +590,10 @@
                 <tbody>
                   <% for (metric of counterMetrics) { 
                     let metricData = data.metrics[metric];
+                    let description = metricData.description ? ' (' + metricData.description + ')' : '';
                   %>
                   <tr>
-                    <td><b><%= metric %></b></td>
+                    <td><b><%= metric %></b><%= description %></td>
                     <% for (statName of ['count']) {
                       let val = metricData.values[statName];
                       val = val !== undefined ? val.toFixed(2) : val = '-'; %>
@@ -618,9 +620,10 @@
             <tbody>
               <% for (metric of gaugeMetrics) { 
                 let metricData = data.metrics[metric];
+                let description = metricData.description ? ' (' + metricData.description + ')' : '';
               %>
               <tr>
-                <td><b><%= metric %></b></td>
+                <td><b><%= metric %></b><%= description %></td>
                   <% for (statName of ['value', 'min', 'max']) {
                     let val = metricData.values[statName];
                     val = val !== undefined ? val.toFixed(2) : val = '-'; %>
